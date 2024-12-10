@@ -17,7 +17,12 @@ app.use(express.json());
 app.use(morgan('tiny'));
 // use JWT helper to block access without valid token
 app.use(authJwt());
+
+// allows as a static path not as an api endpoint
+app.use('/public/uploads', express.static(__dirname + '/public/uploads'));
+
 app.use(errorHandler);
+
 
 //Routes
 const categoriesRoutes = require("./routes/categories");
