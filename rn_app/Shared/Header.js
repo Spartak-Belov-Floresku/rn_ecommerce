@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, SafeAreaView } from "react-native"
+import { StyleSheet, Image, SafeAreaView } from "react-native"
 
 const Header = () => {
  return(

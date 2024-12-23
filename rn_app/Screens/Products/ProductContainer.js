@@ -8,6 +8,7 @@ import {
 
 import ProductList from './ProductList';
 import SearchBox from '../../Shared/SearchBox';
+import Banner from '../../Shared/Banner';
 import SearchedProduct from './SearchProducts';
 
 const data = require('../../assets/data/products.json');
@@ -41,6 +42,7 @@ const ProductContainer = () => {
                     <SearchedProduct productsFiltered={productsFiltered} />
                 ) : (
                     <View style={styles.container}>
+                        <View><Banner /></View>
                         <View style={styles.listContainer}>
                             <FlatList
                                 numColumns={2}

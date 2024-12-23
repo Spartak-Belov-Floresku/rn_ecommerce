@@ -8,7 +8,7 @@ const SearchBox = ({ products, setFocuse, focuse, setProductsFiltered }) => {
     const [inputValue, setInputValue] = useState('');
 
     const searchProduct = text => {
-        setInputValue(text)
+        setInputValue(text);
         setProductsFiltered(
             products.filter((i) =>
                 i.name.toLowerCase().includes(text.toLowerCase())
@@ -20,7 +20,7 @@ const SearchBox = ({ products, setFocuse, focuse, setProductsFiltered }) => {
 
     const closeSearch = () => {
         setFocuse(false);
-        setInputValue('')
+        setInputValue('');
         setProductsFiltered(products);
         inputRef.current.clear();
         inputRef.current.blur();
@@ -29,8 +29,8 @@ const SearchBox = ({ products, setFocuse, focuse, setProductsFiltered }) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.iconSearch}>
-                    <Ionicons name="search" size={24} color="gray" />
-                </TouchableOpacity>
+                <Ionicons name="search" size={24} color="gray" />
+            </TouchableOpacity>
             <TextInput
                 ref={inputRef}
                 style={styles.input}
