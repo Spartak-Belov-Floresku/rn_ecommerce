@@ -5,15 +5,9 @@ import {
     FlatList,
     Dimensions,
 } from 'react-native';
-import {
-    Box,
-    Icon,
-    Input,
-    Text,
-} from 'native-base';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import ProductList from './ProductList';
+import SearchBox from '../../Shared/SearchBox';
 import SearchedProduct from './SearchProducts';
 
 const data = require('../../assets/data/products.json');
@@ -34,70 +28,34 @@ const ProductContainer = () => {
             setProducts([]);
             setProductsFiltered([]);
             setFocuse(false);
-            setTimeout(() => inputElement?.current?.focus(), 15);
         };
     }, []);
 
-    const searchProduct = text => {
-        setProductsFiltered(
-            products.filter(i => i.name.toLowerCase().includes(text.toLowerCase()))
-        );
-    };
-
-    const openList = () => setFocuse(true);
-    const onBlure = () => setFocuse(false);
-
     return (
-        <Box flex={1} style={{ backgroundColor: "white" }}>
-            <Box
-                rounded="lg"
-                style={{
-                    marginTop: 10,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    padding: 10,
-                    backgroundColor: "#f0f0f0",
-                    borderRadius: 10,
-                }}
-            >
-                <Input
-                    placeholder="Search"
-                    variant="filled"
-                    bg="gray.300"
-                    borderRadius="10"
-                    py="2"
-                    px="3"
-                    onFocus={openList}
-                    onBlur={onBlure}
-                    onChangeText={text => searchProduct(text)}
-                    InputLeftElement={
-                        <Icon
-                            as={<Ionicons name="search" />}
-                            size="5"
-                            ml="2"
-                            color="gray.800"
-                        />
-                    }
-                />
-            </Box>
-            {focuse === true ? (
-                <SearchedProduct productsFiltered={productsFiltered} />
-            ) : (
-                <View style={styles.container}>
-                    <Text>Products</Text>
-                    <View style={styles.listContainer}>
-                        <FlatList
-                            numColumns={2}
-                            data={products}
-                            renderItem={({ item }) => (
-                                <ProductList key={item.name} item={item} />
-                            )}
-                            keyExtractor={(item) => item.name}
-                        />
+        <View flex={1} style={{ backgroundColor: "white" }}>
+
+            <SearchBox products={products} setFocuse={setFocuse} focuse={focuse} setProductsFiltered={setProductsFiltered} />
+
+            {
+                focuse ? (
+                    <SearchedProduct productsFiltered={productsFiltered} />
+                ) : (
+                    <View style={styles.container}>
+                        <View style={styles.listContainer}>
+                            <FlatList
+                                numColumns={2}
+                                data={products}
+                                renderItem={({ item }) => (
+                                    <ProductList key={item.name} item={item} />
+                                )}
+                                keyExtractor={(item) => item.name}
+                                contentContainerStyle={{ paddingBottom: 100 }}
+                            />
+                        </View>
                     </View>
-                </View>
-            )}
-        </Box>
+                )
+            }
+        </View>
     );
 };
 
@@ -105,7 +63,8 @@ const styles = StyleSheet.create({
     container: {
         flexWrap: "wrap",
         backgroundColor: "gainsboro",
-        marginTop: 15,
+        paddingTop: 5,
+        marginTop: 5,
     },
     listContainer: {
         height,
