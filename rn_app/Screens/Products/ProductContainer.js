@@ -10,8 +10,10 @@ import ProductList from './ProductList';
 import SearchBox from '../../Shared/SearchBox';
 import Banner from '../../Shared/Banner';
 import SearchedProduct from './SearchProducts';
+import CategoryFilter from './CategoryFilter';
 
 const data = require('../../assets/data/products.json');
+const productCategories = require('../../assets/data/categories.json');
 
 const { height } = Dimensions.get('window');
 
@@ -19,18 +21,42 @@ const ProductContainer = () => {
     const [products, setProducts] = useState(data);
     const [productsFiltered, setProductsFiltered] = useState(data);
     const [focuse, setFocuse] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const[productsCtg, setProductsCtg] = useState([]);
+    const[active, setActive] = useState();
+    const [initialState, setInitialState] = useState([]);
 
     useEffect(() => {
         setProducts(data);
         setProductsFiltered(data);
         setFocuse(false);
+        setCategories(productCategories);
+        setActive(-1);
+        setInitialState(data);
 
         return () => {
             setProducts([]);
             setProductsFiltered([]);
             setFocuse(false);
+            setCategories([]);
+            setActive();
+            setInitialState([]);
         };
     }, []);
+
+    // Products by category
+    const changeCtg = ctg => {
+        {
+            ctg === 'all'
+                ? [setProductsCtg(initialState), setActive(true)]
+                : [
+                    setProducts(
+                        products.filter(product => product.category._id == ctg),
+                    ),
+                    setActive(true)
+                ]
+        }
+    }
 
     return (
         <View flex={1} style={{ backgroundColor: "white" }}>
@@ -41,8 +67,19 @@ const ProductContainer = () => {
                 focuse ? (
                     <SearchedProduct productsFiltered={productsFiltered} />
                 ) : (
-                    <View style={styles.container}>
-                        <View><Banner /></View>
+                    <View>
+                        <View>
+                            <Banner />
+                        </View>
+                        <View>
+                            <CategoryFilter
+                              categories={categories}
+                              changeCtg={changeCtg}
+                              productsCtg={productsCtg}
+                              active={active}
+                              setActive={setActive}
+                            />
+                        </View>
                         <View style={styles.listContainer}>
                             <FlatList
                                 numColumns={2}
