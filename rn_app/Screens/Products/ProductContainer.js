@@ -30,6 +30,7 @@ const ProductContainer = () => {
     useEffect(() => {
         setProducts(data);
         setProductsFiltered(data);
+        setProductsCtg(data)
         setFocuse(false);
         setCategories(productCategories);
         setActive(-1);

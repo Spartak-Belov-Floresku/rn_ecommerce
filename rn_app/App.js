@@ -1,25 +1,19 @@
 import { StyleSheet, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+
+import Main from './Navigators/Main';
 
 import Header from './Shared/Header';
-import ProductContainer from './Screens/Products/ProductContainer';
 import { NativeBaseProvider } from 'native-base';
 
 export default function App() {
   return (
-    <NativeBaseProvider>
-      <View style={styles.container}>
+    <NavigationContainer>
+      <NativeBaseProvider>
         <Header />
-        <ProductContainer />
-      </View>
-    </NativeBaseProvider>
+        <Main />
+      </NativeBaseProvider>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
